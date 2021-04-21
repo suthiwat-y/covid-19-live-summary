@@ -1,7 +1,8 @@
 import { Table, Typography } from "antd";
-import Column from "antd/lib/table/Column";
 import { SortOrder } from "antd/lib/table/interface";
 import React from "react";
+
+const { Column } = Table;
 
 type NumOfCases = number | string;
 

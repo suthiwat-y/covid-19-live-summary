@@ -1,5 +1,5 @@
-import { Col, Row, Statistic } from "antd";
 import React from "react";
+import { Col, Row, Statistic } from "antd";
 
 type GlobalData = {
   TotalConfirmed: number;
