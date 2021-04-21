@@ -1,6 +1,5 @@
-import { Table, Typography } from "antd";
-import { SortOrder } from "antd/lib/table/interface";
 import React from "react";
+import { Table, Typography } from "antd";
 
 const { Column } = Table;
 
@@ -26,6 +25,8 @@ export type CountryTableRecord = {
 interface CountryTableProps {
   countryTableRecords: CountryTableRecord[];
 }
+
+type SortOrder = "descend" | "ascend";
 
 const sortDirections: SortOrder[] = ["descend", "ascend", "descend"];
 
