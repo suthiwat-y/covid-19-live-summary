@@ -1,5 +1,6 @@
 import { Table, Typography } from "antd";
 import Column from "antd/lib/table/Column";
+import { SortOrder } from "antd/lib/table/interface";
 import React from "react";
 
 type NumOfCases = number | string;
@@ -25,25 +26,19 @@ interface CountryTableProps {
   countryTableRecords: CountryTableRecord[];
 }
 
+const sortDirections: SortOrder[] = ["descend", "ascend", "descend"];
+
 const CountryTable: React.FC<CountryTableProps> = ({ countryTableRecords }) => {
   return (
     <Table dataSource={countryTableRecords} style={{ width: "100%" }}>
       <Column<CountryTableRecord>
-        title={
-          <Typography.Text style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
-            Country
-          </Typography.Text>
-        }
+        title={<TableField title={"Country"} />}
         width={"25%"}
         dataIndex="country"
         key="country"
       />
       <Column<CountryTableRecord>
-        title={
-          <Typography.Text style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
-            Total Cases
-          </Typography.Text>
-        }
+        title={<TableField title={"Total Cases"} />}
         width={"25%"}
         align={"center"}
         dataIndex="totalConfirmedRepresentation"
@@ -52,14 +47,10 @@ const CountryTable: React.FC<CountryTableProps> = ({ countryTableRecords }) => {
           return a.totalConfirmed - b.totalConfirmed;
         }}
         defaultSortOrder="descend"
-        sortDirections={["descend", "ascend", "descend"]}
+        sortDirections={sortDirections}
       />
       <Column<CountryTableRecord>
-        title={
-          <Typography.Text style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
-            Total Deaths
-          </Typography.Text>
-        }
+        title={<TableField title={"Total Deaths"} />}
         width={"25%"}
         align={"center"}
         dataIndex="totalDeathsRepresentation"
@@ -67,14 +58,10 @@ const CountryTable: React.FC<CountryTableProps> = ({ countryTableRecords }) => {
         sorter={(a, b) => {
           return a.totalDeaths - b.totalDeaths;
         }}
-        sortDirections={["descend", "ascend", "descend"]}
+        sortDirections={sortDirections}
       />
       <Column<CountryTableRecord>
-        title={
-          <Typography.Text style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
-            Total Recovered
-          </Typography.Text>
-        }
+        title={<TableField title={"Total Recovered"} />}
         width={"25%"}
         align={"center"}
         dataIndex="totalRecoveredRepresentation"
@@ -82,9 +69,17 @@ const CountryTable: React.FC<CountryTableProps> = ({ countryTableRecords }) => {
         sorter={(a, b) => {
           return a.totalRecovered - b.totalRecovered;
         }}
-        sortDirections={["descend", "ascend", "descend"]}
+        sortDirections={sortDirections}
       />
     </Table>
+  );
+};
+
+const TableField: React.FC<{ title: string }> = ({ title }) => {
+  return (
+    <Typography.Text style={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+      {title}
+    </Typography.Text>
   );
 };
 
