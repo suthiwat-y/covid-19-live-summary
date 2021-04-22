@@ -22,7 +22,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `yarn lint`
 
-Run Eslint.\
+Run Eslint.
 
 ### `yarn build`
 
