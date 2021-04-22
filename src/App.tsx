@@ -4,8 +4,8 @@ import axios from "axios";
 import { Divider, Input, Layout, Typography } from "antd";
 import GlobalSummary from "./components/GlobalSummary";
 import CountryTable, {
-  CountryTableRecord,
   CountryData,
+  toTableRecord,
 } from "./components/CountryTable";
 import useCountrySearch from "./hooks/useCountrySearch";
 
@@ -25,26 +25,6 @@ type Covid19Data = {
   Date: string;
 };
 
-const toTableRecord = ({
-  Country,
-  TotalConfirmed,
-  TotalDeaths,
-  TotalRecovered,
-}: CountryData): CountryTableRecord => {
-  return {
-    country: Country,
-    totalConfirmed: TotalConfirmed,
-    totalDeaths: TotalDeaths,
-    totalRecovered: TotalRecovered,
-    totalConfirmedRepresentation:
-      TotalConfirmed <= 0 ? "unreported" : TotalConfirmed.toLocaleString(),
-    totalDeathsRepresentation:
-      TotalDeaths <= 0 ? "unreported" : TotalDeaths.toLocaleString(),
-    totalRecoveredRepresentation:
-      TotalRecovered <= 0 ? "unreported" : TotalRecovered.toLocaleString(),
-  };
-};
-
 const emptyData: Covid19Data = {
   ID: "",
   Message: "",
@@ -53,7 +33,7 @@ const emptyData: Covid19Data = {
   Date: "",
 };
 
-const searchOptions = {
+const countrySearchOptions = {
   keys: ["Country"],
   threshold: 0.2,
 };
@@ -68,7 +48,7 @@ function App() {
         const data: Covid19Data = response.data;
         setData(data);
       })
-      .catch((error) => console.log(`Error Getting Data: ${error}`));
+      .catch((error) => console.log(error));
   }, []);
 
   const dateStr = JSON.parse(JSON.stringify(data.Date));
@@ -79,7 +59,7 @@ function App() {
 
   const { results, setSearchTerm } = useCountrySearch<CountryData>({
     data: countryData,
-    options: searchOptions,
+    options: countrySearchOptions,
   });
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,12 +69,12 @@ function App() {
   const countryTableRecords = results.map(toTableRecord);
 
   return (
-    <div>
+    <div className="App">
       <Title style={{ paddingTop: 18, textAlign: "center" }}>
         COVID-19 Live Summary
       </Title>
       <div style={{ textAlign: "center" }}>
-        <Text code>{`updated: ${date}`}</Text>
+        <Text code ellipsis={true}>{`updated: ${date}`}</Text>
       </div>
       <Divider style={{ marginTop: 24, color: "#1890ff" }}>
         Global Summary
