@@ -1,37 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
-import axios from "axios";
-import { Divider, Input, Layout, Typography } from "antd";
+import { Alert, Divider, Input, Layout, Typography } from "antd";
 import GlobalSummary from "./components/GlobalSummary";
 import CountryTable, {
   CountryData,
   toTableRecord,
 } from "./components/CountryTable";
 import useCountrySearch from "./hooks/useCountrySearch";
+import useGetData from "./hooks/useGetData";
 
 const { Title, Text } = Typography;
-
-const url = "https://api.covid19api.com/summary";
-
-type Covid19Data = {
-  ID: string;
-  Message: string;
-  Global: {
-    TotalConfirmed: number;
-    TotalDeaths: number;
-    TotalRecovered: number;
-  };
-  Countries: CountryData[];
-  Date: string;
-};
-
-const emptyData: Covid19Data = {
-  ID: "",
-  Message: "",
-  Global: { TotalConfirmed: 0, TotalDeaths: 0, TotalRecovered: 0 },
-  Countries: [],
-  Date: "",
-};
 
 const countrySearchOptions = {
   keys: ["Country"],
@@ -39,17 +17,7 @@ const countrySearchOptions = {
 };
 
 function App() {
-  const [data, setData] = useState(emptyData);
-
-  useEffect(() => {
-    axios
-      .get(url)
-      .then((response) => {
-        const data: Covid19Data = response.data;
-        setData(data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  const { data, errorMessage } = useGetData();
 
   const dateStr = JSON.parse(JSON.stringify(data.Date));
   const date = new Date(dateStr);
@@ -70,6 +38,9 @@ function App() {
 
   return (
     <div className="App">
+      {errorMessage ? (
+        <Alert message={errorMessage} type="error" closable />
+      ) : null}
       <Title style={{ paddingTop: 18, textAlign: "center" }}>
         COVID-19 Live Summary
       </Title>
