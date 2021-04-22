@@ -24,7 +24,10 @@ const emptyData: Covid19Data = {
 
 const url = "https://api.covid19api.com/summary";
 
-export default function useGetData() {
+export default function useGetData(): {
+  data: Covid19Data;
+  errorMessage: string;
+} {
   const [data, setData] = useState(emptyData);
   const [errorMessage, setErrorMessage] = useState("");
 
