@@ -16,7 +16,7 @@ const countrySearchOptions = {
   threshold: 0.2,
 };
 
-function App() {
+function App(): JSX.Element {
   const { data, errorMessage } = useGetData();
 
   const dateStr = JSON.parse(JSON.stringify(data.Date));
