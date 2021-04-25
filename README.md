@@ -1,6 +1,7 @@
 # Covid-19 Live Summary
 
 A web page for displaying real-time world-wide Covid-19 basic information including global data and by-country data.\
+Features: Sorting, Searching, Simple responsive.
 This project is created by using `Create React App`, `Typescript`, and `Ant Design`.
 
 ## Available Scripts
